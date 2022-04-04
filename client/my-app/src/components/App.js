@@ -6,7 +6,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h2>This is the CS411 project client</h2>
+          <h2>Hello, This is the CS411 project client</h2>
         </div>
       </div>
     );
