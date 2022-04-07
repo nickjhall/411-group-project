@@ -10,12 +10,17 @@ app = Flask(__name__)
 def hello_world():
     return "<p>This is the CS411 server!</p>"
 
+@app.route("/test")
+def test_route():
+    return {"test": "success"}
+
 @app.route("/findRestaurants")
 def findRestaurants():
-    json = request.get_json()
-
-    term = json["foodType"]
-    location = json["location"]
+    # term = json["foodType"]
+    # location = json["location"]
+    args = request.args
+    term = args.get("foodType")
+    location = args.get("location")
 
     # api-endpoint
     url = 'https://api.yelp.com/v3/businesses/search'

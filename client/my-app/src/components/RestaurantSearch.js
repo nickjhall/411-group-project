@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import RestaurantDisplay from "./RestaurantDisplay"
 
 const RestaurantSearch = () => {
   const [state, setState] = useState({
     foodType: "",
     location: "",
   });
+  const [restaurants, setRestaurants] = useState([]);
 
   const handleChange = (e) => {
     setState({
@@ -16,6 +19,12 @@ const RestaurantSearch = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(state);
+    axios.get(
+      `/findRestaurants?foodType=${state.foodType}&location=${state.location}`,
+    ).then((response) => {
+        setRestaurants(response.data.restaurants);
+        console.log(restaurants)
+    })
   };
 
   return (
@@ -45,6 +54,7 @@ const RestaurantSearch = () => {
         <br />
         <button type="submit">Submit</button>
       </form>
+      <RestaurantDisplay restaurants={restaurants} />
     </div>
   );
 };
