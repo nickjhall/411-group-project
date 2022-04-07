@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import requests
 import os
 
@@ -12,5 +12,6 @@ def hello_world():
 
 @app.route("/weather")
 def get_weather():
-    response = requests.get("http://api.openweathermap.org/data/2.5/forecast?q=Boston&appid=" + OPENWEATHER_API_KEY)
+    city = request.args.get("city")
+    response = requests.get("http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + OPENWEATHER_API_KEY)
     return response.json()
