@@ -2,6 +2,7 @@ from audioop import add
 from flask import Flask, request
 from numpy import result_type
 import requests
+import os
 
 app = Flask(__name__)
 
@@ -9,7 +10,7 @@ app = Flask(__name__)
 def hello_world():
     return "<p>This is the CS411 server!</p>"
 
-@app.route("/findRestaurants", methods=["POST"])
+@app.route("/findRestaurants")
 def findRestaurants():
     json = request.get_json()
 
@@ -19,7 +20,7 @@ def findRestaurants():
     # api-endpoint
     url = 'https://api.yelp.com/v3/businesses/search'
 
-    yelpToken = ""
+    yelpToken = os.environ.get("YELP_API_KEY")
 
     # authorization using access token
     headers = {'Authorization': "Bearer " + yelpToken}
