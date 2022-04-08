@@ -18,11 +18,14 @@ const RestaurantSearch = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(state);
+    const url = "http://127.0.0.1:4000"
+
     axios.get(
-      `/findRestaurants?foodType=${state.foodType}&location=${state.location}`,
-    ).then((response) => {
+      url + `/findRestaurants?foodType=${state.foodType}&location=${state.location}`)
+      .then((response) => {
+        console.log("Response from server is", response)
         setRestaurants(response.data.restaurants);
+
         console.log(restaurants)
     })
   };
@@ -53,8 +56,8 @@ const RestaurantSearch = () => {
         </label>
         <br />
         <button type="submit">Submit</button>
+        <RestaurantDisplay restaurants={restaurants} />
       </form>
-      <RestaurantDisplay restaurants={restaurants} />
     </div>
   );
 };

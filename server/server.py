@@ -1,6 +1,6 @@
 from audioop import add
 from flask import Flask, request
-from numpy import result_type
+from flask_cors import cross_origin
 import requests
 import os
 
@@ -15,6 +15,7 @@ def test_route():
     return {"test": "success"}
 
 @app.route("/findRestaurants")
+@cross_origin()
 def findRestaurants():
     # term = json["foodType"]
     # location = json["location"]
@@ -33,7 +34,6 @@ def findRestaurants():
     # parameters I'm passing in to the api request
     params = {'term': term,
               'location': location,
-              'open_now': True,
               'limit': 5
               }
     # api-call

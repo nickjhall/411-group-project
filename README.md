@@ -3,7 +3,9 @@ Group members include Jason Zhang, Nick Hall, Kourosh Ghaffari, Weirun Huang, Er
 
 # How to run the client
 1) Make sure you have react install, you would also need an updated enough version of node (I use node version 14.18.1 and that works)
-2) Change directory into client/my-app and then type in "npm start", this should launch the initial App.js which is located inside client/my-app/src/components
+2) Change directory into client/my-app and then type:
+    - 1) Type in "npm install" and wait for node packages to install (should take a while)
+    - 2) Type in "npm start", this should launch the initial App.js which is located inside client/my-app/src/components
 3) If working, you should see a message welcoming you to the CS411 client
 
 # How to run the server
