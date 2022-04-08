@@ -10,9 +10,6 @@ app = Flask(__name__)
 def hello_world():
     return "<p>This is the CS411 server!</p>"
 
-@app.route("/test")
-def test_route():
-    return {"test": "success"}
 
 @app.route("/findRestaurants")
 @cross_origin()
