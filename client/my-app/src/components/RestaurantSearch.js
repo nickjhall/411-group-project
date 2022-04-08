@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import RestaurantDisplay from "./RestaurantDisplay"
+import RestaurantDisplay from "./RestaurantDisplay";
+import config from "../config";
 
 const RestaurantSearch = () => {
   const [state, setState] = useState({
@@ -18,10 +19,9 @@ const RestaurantSearch = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const url = "http://127.0.0.1:4000"
 
     axios.get(
-      url + `/findRestaurants?foodType=${state.foodType}&location=${state.location}`)
+      `${config.backend_url}/findRestaurants?foodType=${state.foodType}&location=${state.location}`)
       .then((response) => {
         console.log("Response from server is", response)
         setRestaurants(response.data.restaurants);
