@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import RestaurantDisplay from "./RestaurantDisplay";
+import WeatherDisplay from "./WeatherDisplay";
 import config from "../config";
 
 const RestaurantSearch = () => {
@@ -56,6 +57,7 @@ const RestaurantSearch = () => {
         </label>
         <br />
         <button type="submit">Submit</button>
+        <WeatherDisplay restaurants={restaurants} />
         <RestaurantDisplay restaurants={restaurants} />
       </form>
     </div>

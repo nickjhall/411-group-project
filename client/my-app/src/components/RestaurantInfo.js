@@ -13,6 +13,8 @@ const RestaurantInfo = (props) =>
                     <div>{restaurant.address}</div>
                     <div>Phone: {restaurant.phone}</div>
                     <div>Rating: {restaurant.rating}/5</div>
+                    <div>Latitude: {restaurant.lat}</div>
+                    <div>Longitude: {restaurant.lon}</div>
                 </div>
             }
         </div>
