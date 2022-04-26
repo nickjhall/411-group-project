@@ -1,16 +1,105 @@
 from audioop import add
-from flask import Flask, request
+from flask import Flask, request, redirect
 from flask_cors import cross_origin
+from flask_login import login_required, LoginManager, current_user, login_user, logout_user
+import json
 import requests
 import os
+from oauthlib.oauth2 import WebApplicationClient
+from user import User
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 app = Flask(__name__)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+app.secret_key = os.environ.get("SECRET_KEY")
+client = WebApplicationClient(os.environ.get("GOOGLE_CLIENT_ID"))
+GOOGLE_DISCOVERY_URL = (
+    "https://accounts.google.com/.well-known/openid-configuration"
+)
+
+def get_google_provider_cfg():
+    return requests.get(GOOGLE_DISCOVERY_URL).json()
+
 
 @app.route("/")
 def hello_world():
     return "<p>This is the CS411 server!</p>"
 
 
+@login_manager.user_loader
+def user_loader(user_id):
+    return User.get(user_id)
+
+
+@app.route("/login")
+def login():
+    google_provider_cfg = get_google_provider_cfg()
+    authorization_endpoint = google_provider_cfg["authorization_endpoint"]
+
+    request_uri = client.prepare_request_uri(
+        authorization_endpoint,
+        redirect_uri=request.base_url + "/callback",
+        scope=["openid", "email", "profile"]
+    )
+    return redirect(request_uri)
+
+
+@app.route("/login/callback")
+def callback():
+    code = request.args.get("code")
+
+    google_provider_cfg = get_google_provider_cfg()
+    token_endpoint = google_provider_cfg["token_endpoint"]
+
+    token_url, headers, body = client.prepare_token_request(
+        token_endpoint,
+        authorization_response=request.url,
+        redirect_url=request.base_url,
+        code=code
+    )
+
+    token_response = requests.post(
+        token_url,
+        headers=headers,
+        data=body,
+        auth=(os.environ.get("GOOGLE_CLIENT_ID"), os.environ.get("GOOGLE_CLIENT_SECRET"))
+    )
+
+    client.parse_request_body_response(json.dumps(token_response.json()))
+
+    userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
+    uri, headers, body = client.add_token(userinfo_endpoint)
+    userinfo_response = requests.get(uri, headers=headers, data=body)
+
+    if userinfo_response.json().get("email_verified"):
+        unique_id = userinfo_response.json()["sub"]
+        users_email = userinfo_response.json()["email"]
+        picture = userinfo_response.json()["picture"]
+        users_name = userinfo_response.json()["given_name"]
+    else:
+        return "Email unavailable/unverified.", 400
+    
+    user = User(id=unique_id, name=users_name, email=users_email, pic=picture)
+    if not User.get(unique_id):
+        User.create(unique_id, users_name, users_email, picture)
+    
+    login_user(user)
+    print("Logged in!")
+    print(user)
+
+    return redirect("/")
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
+
+
+@login_required
 @app.route("/findRestaurants")
 @cross_origin()
 def findRestaurants():
@@ -65,6 +154,8 @@ def findRestaurants():
 
     return {"Message": "Success", "restaurants": restaurantInformation}
 
+
+@login_required
 @app.route("/getWeather")
 @cross_origin()
 def getWeather():
