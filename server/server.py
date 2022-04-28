@@ -1,5 +1,5 @@
 from audioop import add
-from flask import Flask, request, redirect
+from flask import Flask, jsonify, request, redirect
 from flask_cors import cross_origin
 from flask_login import login_required, LoginManager, current_user, login_user, logout_user
 import json
@@ -101,8 +101,8 @@ def logout():
     return redirect("/")
 
 
-@login_required
 @app.route("/findRestaurants")
+@login_required
 @cross_origin()
 def findRestaurants():
     # term = json["foodType"]
@@ -157,8 +157,8 @@ def findRestaurants():
     return {"Message": "Success", "restaurants": restaurantInformation}
 
 
-@login_required
 @app.route("/getWeather")
+@login_required
 @cross_origin()
 def getWeather():
     args = request.args
