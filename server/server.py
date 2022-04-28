@@ -6,7 +6,7 @@ import json
 import requests
 import os
 from oauthlib.oauth2 import WebApplicationClient
-from user import User
+from models import User
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 app = Flask(__name__)
@@ -14,6 +14,7 @@ app = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(app)
 app.secret_key = os.environ.get("SECRET_KEY")
+
 client = WebApplicationClient(os.environ.get("GOOGLE_CLIENT_ID"))
 GOOGLE_DISCOVERY_URL = (
     "https://accounts.google.com/.well-known/openid-configuration"
@@ -25,12 +26,14 @@ def get_google_provider_cfg():
 
 @app.route("/")
 def hello_world():
+    print(current_user.is_authenticated)
     return "<p>This is the CS411 server!</p>"
 
 
 @login_manager.user_loader
 def user_loader(user_id):
-    return User.get(user_id)
+    print("loading user")
+    return User.get_from_id(user_id)
 
 
 @app.route("/login")
@@ -81,13 +84,12 @@ def callback():
     else:
         return "Email unavailable/unverified.", 400
     
-    user = User(id=unique_id, name=users_name, email=users_email, pic=picture)
-    if not User.get(unique_id):
+    user = User(_id=unique_id, name=users_name, email=users_email, pic=picture)
+    if not User.get_from_id(unique_id):
         User.create(unique_id, users_name, users_email, picture)
     
     login_user(user)
-    print("Logged in!")
-    print(user)
+    print(current_user.email + " logged in")
 
     return redirect("/")
 
