@@ -10,7 +10,7 @@ users = db.users
 # TODO: connect to database
 class User(UserMixin):
 
-    def __init__(self, _id, name, email, pic):
+    def __init__(self, _id, name, email):
         self._id = _id
         self.name = name
         self.email = email
@@ -20,6 +20,9 @@ class User(UserMixin):
     
     def get_email(self):
       return self.email
+    
+    def json(self):
+      return {"_id": self._id, "name": self.name, "email": self.email}
 
     @staticmethod
     def get_from_id(user_id):
