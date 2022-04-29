@@ -17,13 +17,10 @@ const WeatherDisplay = (props) =>
           .then((response) => {
             console.log("Response from server is", response)
             setWeather(response.data.weather);
-    
-            console.log(weather)
         })
       };
 
     
-    console.log(props.restaurants)
     return (
         <div>
             {
