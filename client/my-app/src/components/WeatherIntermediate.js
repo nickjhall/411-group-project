@@ -3,7 +3,6 @@ import WeatherInfo from "./WeatherInfo";
 
 const WeatherIntermediate = (props) =>
 {
-    console.log(props.weather)
     return (
         <div>
             {

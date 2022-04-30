@@ -24,10 +24,7 @@ const RestaurantSearch = () => {
     axios.get(
       `${config.backend_url}/findRestaurants?foodType=${state.foodType}&location=${state.location}`)
       .then((response) => {
-        console.log("Response from server is", response)
         setRestaurants(response.data.restaurants);
-
-        console.log(restaurants)
     })
   };
 

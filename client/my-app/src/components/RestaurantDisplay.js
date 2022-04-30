@@ -3,7 +3,6 @@ import RestaurantInfo from "./RestaurantInfo";
 
 const RestaurantDisplay = (props) =>
 {
-    console.log(props.restaurants)
     return (
         <div>
             {
