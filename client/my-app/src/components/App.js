@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../css/App.css';
 import RestaurantSearch from './RestaurantSearch';
 import LoginButton from './LoginButton';
+import Planner from './Planner';
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
           <h2>Restaurant Search</h2>
           <LoginButton />
           <RestaurantSearch />
+          <Planner />
         </div>
       </div>
     );
