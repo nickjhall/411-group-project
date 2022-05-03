@@ -7,8 +7,8 @@ const RestaurantDisplay = (props) =>
         <div>
             {
                 ((props.restaurants).length <= 0) ? 
-                "No search results currently": 
-                props.restaurants.map((restaurant) => <RestaurantInfo restaurant={restaurant}/>
+                    "No search results currently": 
+                    props.restaurants.map((restaurant) => <RestaurantInfo key={restaurant} restaurant={restaurant}/>
                 )
             }
         </div>
