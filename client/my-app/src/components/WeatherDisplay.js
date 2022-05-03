@@ -11,14 +11,14 @@ const WeatherDisplay = (props) =>
 
     const handleClick = (e) => {
         e.preventDefault();
-    
+
         axios.get(
-          `${config.backend_url}/getWeather?lat=${restaurant[0].lat}&lon=${restaurant[0].lon}`)
-          .then((response) => {
+            `${config.backend_url}/getWeather?lat=${restaurant[0].lat}&lon=${restaurant[0].lon}`)
+            .then((response) => {
             console.log("Response from server is", response)
             setWeather(response.data.weather);
         })
-      };
+    };
 
     
     return (

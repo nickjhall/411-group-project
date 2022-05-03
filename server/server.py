@@ -156,18 +156,44 @@ def findPlans():
         dateWeatherList.append({"date": currentDate, "weather": dayWeather["weather"], "temp": dayWeather["temp"]})
         currentDate += timedelta(days=1)
     
+    for weather in dateWeatherList:
+        print(weather["weather"][0])
+        print(weather["date"].strftime("%Y-%m-%d"))
+        print(weather["weather"][0]["main"])
+        print(weather["weather"][0]["main"] == "Clouds")
+        print("~~~")
+
     bestDates = []
     selectedDates = [day for day in dateWeatherList if day["date"].strftime("%Y-%m-%d") in freeDates]
-    print(selectedDates)
-    print(dateWeatherList)
-    print(dateWeatherList[3]["date"].strftime("%Y-%m-%d"))
-    bestDates = [day for day in selectedDates if day["weather"][0]["main"] == "Clear"]
-    if not bestDates:
-        bestDates = [day for day in selectedDates if day["weather"][0]["main"] == "Clouds"]
-    else:
-        bestDates = selectedDates
+    print("Original selectedDates have a length of " + str(len(selectedDates)))
+    print("the selected dates were", selectedDates)
+    print("~~~")
+    print("the dateWeatherList is", dateWeatherList)
+    print("~~~")
+    print("the other print is",dateWeatherList[3]["date"].strftime("%Y-%m-%d"))
+
+    print("checking for best dates that are clear")
+    for day in selectedDates:
+        if day["weather"][0]["main"] == "Clear":
+            bestDates.append(day)
     
-    print(bestDates)
+    if len(bestDates) == 0:
+        for day in selectedDates:
+            if day["weather"][0]["main"] == "Clouds":
+                bestDates.append(day)
+
+    if len(bestDates) == 0:
+        bestDates = selectedDates
+    # bestDates = [day for day in selectedDates if day["weather"][0]["main"] == "Clear"]
+    # print("clear days is " + str(bestDates))
+    # if len(bestDates) == 0:
+    #     print("checking for best dates that are cloudy")
+    #     bestDates = [day for day in selectedDates if day["weather"][0]["main"] == "Clouds"]
+    #     print("cloudy days is " + str(bestDates))
+    # else:
+    #     bestDates = selectedDates
+    
+    print("bestDates are ", bestDates)
 
     planIdeas = []
     for i in range(3):
