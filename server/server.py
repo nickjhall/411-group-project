@@ -66,8 +66,8 @@ def login():
 
 
 @app.route("/logout")
-@login_required
 def logout():
+    print(current_user.is_authenticated)
     logout_user()
 
 
@@ -127,7 +127,6 @@ def findRestaurants():
 
 
 @app.route("/getWeather")
-@login_required
 @cross_origin()
 def getWeather():
     args = request.args
