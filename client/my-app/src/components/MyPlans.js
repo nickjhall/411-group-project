@@ -9,7 +9,7 @@ const MyPlans = () => {
     useEffect(() => {
         axios.get(`${config.backend_url}/getPlans?createdBy=` + sessionStorage.getItem("user_id"))
         .then((response) => {
-            console.log(response);
+            console.log("The response from /getPlans is ", response);
             setPlans(response.data)
         });
     }, []);
