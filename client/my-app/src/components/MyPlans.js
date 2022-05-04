@@ -14,14 +14,7 @@ const MyPlans = () => {
         });
     }, []);
 
-    // + sessionStorage.getItem("user_id")
-    // const showPlans = () => {
-    //     axios.get(`${config.backend_url}/getPlans?createdBy=` + sessionStorage.getItem("user_id"))
-    //     .then((response) => {
-    //         console.log(response);
-    //         setPlans(response.data)
-    //     });
-    // }
+    
     return (
         <div>
             <h1>My plans</h1>
