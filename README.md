@@ -1,3 +1,8 @@
+# General Overview
+
+With our application, we help set up and organize your meal plans by taking out some of the work for you. You tell us what type of food you're craving, where you are and where you want to go and you leave the rest to us. In terms of where you are, you can input a street, city, or even a zip code and we will find the places closest to you. From the home menu you are able to access your planner, showing any meal plans that you have already made, or you can search for a restuarant. After searching with your given parameters, we will give you the three best restuarants for you. Along with the restuarant name, we give you the address, phone number, google rating, and even tell you what the weather is on the given day in order to help you better plan your outings. All of this information is available both in the restuarant selection as well as in the planner. Once you find a place that you want to go to, you simple click the "Make Plan" button to create the plan for yourself. Once any plan is made, you are brought to your planner where you will see your new plan as well as any other outings that you have organized on the application. From the planner you are able to view all of the plans that you have made, and, if needed, you can cancel any plans that you have already created and return to the home menu.
+
+
 # 411-group-project
 Group members include Jason Zhang, Nick Hall, Kourosh Ghaffari, Weirun Huang, Erickson Monterroza
 
