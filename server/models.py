@@ -1,4 +1,3 @@
-from flask_login import UserMixin
 import pymongo
 import uuid
 import os
@@ -9,7 +8,7 @@ users = db.users
 plans = db.plans
 
 
-class User(UserMixin):
+class User():
 
   def __init__(self, _id, name, email):
     self._id = _id

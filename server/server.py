@@ -3,7 +3,6 @@ from http import HTTPStatus
 from venv import create
 from flask import Flask, jsonify, request, redirect
 from flask_cors import cross_origin, CORS
-from flask_login import login_required, LoginManager, current_user, login_user, logout_user
 import json
 import requests
 import os
@@ -18,8 +17,6 @@ google_request = google_requests.Request()
 
 app = Flask(__name__)
 
-login_manager = LoginManager()
-login_manager.init_app(app)
 app.secret_key = os.environ.get("SECRET_KEY")
 
 client = WebApplicationClient(os.environ.get("GOOGLE_CLIENT_ID"))
@@ -48,10 +45,6 @@ def login():
     if not User.get_from_id(id_info["sub"]):
         User.create(id_info["sub"], id_info["name"], id_info["email"])
     
-    login_user(user)
-
-    # print(id_info)
-    print(current_user.is_authenticated)
 
     return user.json()
 
