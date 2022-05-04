@@ -73,3 +73,7 @@ class Plan():
   def create(createdBy, restaurant, address, pic, date):  
     plan = plans.insert_one({ "_id": uuid.uuid4().hex, "createdBy": createdBy, "restaurant": restaurant, "address": address, "pic": pic, "date": date})
     return plan
+
+  @staticmethod
+  def delete(planId):
+    plans.delete_one({ "_id": planId})

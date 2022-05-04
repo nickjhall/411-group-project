@@ -194,3 +194,11 @@ def getPlans():
     plans = Plan.get_from_user_id(createdBy)
     plans_json = jsonify([plan.json() for plan in plans])
     return plans_json
+
+@app.route("/deletePlans", methods=["GET"])
+@cross_origin()
+def deletePlans():
+    planId = request.args.get("planId")
+    print(planId)
+    Plan.delete(planId)
+    return {"Message": "Success"}

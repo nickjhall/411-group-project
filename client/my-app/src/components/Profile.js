@@ -9,6 +9,7 @@ const Profile = () => {
         <div>
             <h1>Welcome to your homepage {name}</h1>
             <RestaurantSearch />
+            <button><a href="/myPlans">My Plans</a></button>
         </div>
     );
   };
