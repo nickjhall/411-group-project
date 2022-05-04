@@ -6,6 +6,8 @@ import config from "../config";
 const RestaurantSearch = () => {
     const [state, setState] = useState({ foodType: "", location: ""});
     const [restaurants, setRestaurants] = useState([]);
+    const [plans, setPlans] = useState([])
+    
     let today = new Date();
     let dates = []
     let dateStrings = []
@@ -35,10 +37,11 @@ const RestaurantSearch = () => {
         console.log(chosenDates)
 
         axios.get(
-            `${config.backend_url}/findRestaurants?foodType=${state.foodType}&location=${state.location}&created_by=${sessionStorage.getItem("user_id")}&dates=${chosenDates}`)
+            `${config.backend_url}/findPlans?foodType=${state.foodType}&location=${state.location}&created_by=${sessionStorage.getItem("user_id")}&dates=${chosenDates}`)
             .then((response) => {
                 console.log("This response is from restaurantSearch", response)
-                setRestaurants(response.data.restaurants);
+                // setRestaurants(response.data.restaurants);
+                setPlans(response.data)
         })
     };
 
@@ -66,7 +69,7 @@ const RestaurantSearch = () => {
             </select>
         <button type="submit">Submit</button>
         <hr />
-        <RestaurantDisplay restaurants={restaurants} />
+        <RestaurantDisplay plans={plans} />
         <hr />
       </form>
     </div>

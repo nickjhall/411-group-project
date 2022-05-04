@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router'
 const RestaurantInfo = (props) =>
 {
     const restaurant = props.restaurant
+    const plan = props.plan;
+    console.log(plan)
     const navigate = useNavigate();
     const [redirect, setRedirect] = useState(Boolean);
 
@@ -18,14 +20,12 @@ const RestaurantInfo = (props) =>
     const handleSelect = (e) => {
         e.preventDefault();
 
-        console.log("You have chosen " + restaurant.name)
-
         axios.post(`${config.backend_url}/selectPlan`, {
             createdBy: sessionStorage.getItem("user_id"),
-            restaurant: restaurant.name,
-            address: restaurant.address,
-            pic: restaurant.image,
-            date: "2022-05-03"
+            restaurant: plan.restaurant.name,
+            address: plan.restaurant.address.join(', '),
+            pic: plan.restaurant.image,
+            date: plan.date
         }).then((response) => {
             console.log(response.data)
             console.log("Response was a success", response.data["Message"] === "Success")
@@ -39,12 +39,14 @@ const RestaurantInfo = (props) =>
     return (
         <div>
             {
-                <div key={JSON.stringify(restaurant)}>
-                    <h2>{restaurant.name}</h2>
-                    <img src={restaurant.image} height="300px" width="auto%" alt={restaurant.name}/>
-                    <div>{restaurant.address}</div>
-                    <div>Phone: {restaurant.phone}</div>
-                    <div>Rating: {restaurant.rating}/5</div>
+                <div key={JSON.stringify(plan)}>
+                    <h2>{plan.restaurant.name}</h2>
+                    <img src={plan.restaurant.image} height="300px" width="auto%" alt={plan.restaurant.name}/>
+                    <div>{plan.restaurant.address.join(', ')}</div>
+                    <div>Phone: {plan.restaurant.phone}</div>
+                    <div>Rating: {plan.restaurant.rating}/5</div>
+                    <div>Date: {plan.date}</div>
+                    <div>Weather: {plan.weather}</div>
                     <button onClick={handleSelect}>Make plan</button>
                     <hr />
                 </div>

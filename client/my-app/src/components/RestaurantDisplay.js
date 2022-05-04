@@ -6,9 +6,9 @@ const RestaurantDisplay = (props) =>
     return (
         <div>
             {
-                ((props.restaurants).length <= 0) ? 
+                ((props.plans).length <= 0) ? 
                     "No search results currently": 
-                    props.restaurants.map((restaurant) => <RestaurantInfo key={restaurant} restaurant={restaurant}/>
+                    props.plans.map((plan) => <RestaurantInfo key={plan} plan={plan}/>
                 )
             }
         </div>
